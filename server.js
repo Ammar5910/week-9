@@ -24,9 +24,9 @@ const MongoClient = require('mongodb').MongoClient;
 
 let db;
 //Mongo Client.connect('mongodb+srv://MyMongoDBUser:wednesday@cluster0.epqbr.mongodb.net', )
-MongoClient.connect('mongodb+srv://ammar5910s:Funnyb0y@cluster0.y2a6x.mongodb.net/', (err, client) =>{
+MongoClient.connect('mongodb+srv://kabeerkumar577:9510Kabeer@cst2120.ppvcmnk.mongodb.net/', (err, client) =>{
 
-db = client.db('knowledge_zone') // Paste your database name here
+db = client.db('webstore')
 })
 
 app.get('/', (req, res, next) =>{
@@ -47,35 +47,40 @@ app.get('/collection/:collectionName', (req, res, next) => {
     })
 })
 
-// adding post
 app.post('/collection/:collectionName', (req, res, next) => {
-    req.collection.insert(req.body, (e, results) => {
+    req.collection.insert(req.body, (e, results) =>{
         if(e) return next(e)
         res.send(results.ops)
     })
 })
 
-// return with object id
-const ObjectID = require("mongodb").ObjectID;
-app.get("/collection/:collectionName/:id", (req, res, next) => {
-  req.collection.findOne({ _id: new ObjectID(req.params.id) }, (e, result) => {
-    if (e) return next(e);
-    res.send(result);
-  });
-});
+const ObjectID = require('mongodb').ObjectID;
+app.get('/collection/:collectionName/:id', (req, res, next)=>{
+    req.collection.findOne({ _id: new ObjectID(req.params.id) }, (e, result) =>{
+        if (e) return next (e)
+        res.send(result)
+    })
+})
 
-// update an object
 app.put('/collection/:collectionName/:id', (req, res, next) => {
-    req.collection.update(
-        { _id: new ObjectID(req.params.id) }, { $set: req.body }, { safe: true, multi: false },
+    req.collection.update({ _id: new ObjectID(req.params.id) }, { $set: req.body }, { safe: true, multi: false },
         (e, result) => {
             if (e) return next(e)
             res.send((result.result.n === 1) ? { msg: 'success' } : { msg: 'error' })
         })
 })
 
+app.delete('/collection/:collectionName/:id', (req, res, next) => {
+    req.collection.deleteOne({
+        _id: ObjectID(req.params.id)},
+        (e, result) =>{
+            if (e) return next(e)
+            res.send((result.result.n === 1) ? {msg: 'success'} : {msg: 'error'})
+        })
+})
+
 // app.listen(3000, () =>{
-//     console.log('Express.js server running at http://localhost:3000');
+//     console.log('Express.js server running at localhost:3000');
 // })
 
 const port = process.env.PORT || 3000
