@@ -24,7 +24,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 let db;
 //Mongo Client.connect('mongodb+srv://MyMongoDBUser:wednesday@cluster0.epqbr.mongodb.net', )
-MongoClient.connect('mongodb+srv://kabeerkumar577:9510Kabeer@cst2120.ppvcmnk.mongodb.net/', (err, client) =>{
+MongoClient.connect('mongodb+srv://ammar5910s:Funnyb0y@cluster0.y2a6x.mongodb.net/', (err, client) =>{
 
 db = client.db('webstore')
 })
